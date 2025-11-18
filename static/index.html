@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>予定調整フォーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/sanitize.css" />
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 16px;
+      background: #f5f5f5;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    p.desc {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+    input[type="text"],
+    textarea,
+    input[type="date"],
+    input[type="time"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    .row {
+      margin-bottom: 16px;
+    }
+    .availability-row {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 0.9fr auto;
+      gap: 6px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .availability-row small {
+      font-size: 0.75rem;
+      color: #666;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-outline {
+      background: white;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+    }
+    .status {
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+    .status.ok {
+      color: #16a34a;
+    }
+    .status.err {
+      color: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>予定調整フォーム</h1>
+    <p class="desc">
+      集まる日程を調整するためのフォームです。<br />
+      わかる範囲で大丈夫なので、空いている日・時間帯と、行動範囲 / 食べ物の好みを教えてください。
+    </p>
+
+    <form id="planner-form">
+      <div class="row">
+        <label for="name">名前（呼ばれたい名前）</label>
+        <input id="name" type="text" required placeholder="例）よほよほ" />
+      </div>
+
+      <div class="row">
+        <label for="area">行動範囲</label>
+        <input
+          id="area"
+          type="text"
+          required
+          placeholder="例）博多駅から電車で30分くらいまで / 天神〜中洲あたり"
+        />
+      </div>
+
+      <div class="row">
+        <label>空いている日・時間帯</label>
+        <div id="availability-list"></div>
+        <button type="button" class="btn btn-outline" id="btn-add-availability">
+          ＋ 候補日を追加
+        </button>
+        <small>※ 例）2025-11-21 18:00〜21:00 など、複数追加してOKです。</small>
+      </div>
+
+      <div class="row">
+        <label for="food-dislike">嫌いな食べ物</label>
+        <textarea id="food-dislike" placeholder="例）セロリ、パクチー など"></textarea>
+      </div>
+
+      <div class="row">
+        <label for="food-weak">ちょっと苦手な食べ物</label>
+        <textarea id="food-weak" placeholder="例）辛すぎるもの、ニンニク多め など"></textarea>
+      </div>
+
+      <div class="row">
+        <label for="food-cant">アレルギーなどで食べられないもの</label>
+        <textarea id="food-cant" placeholder="例）甲殻類、そば など"></textarea>
+      </div>
+
+      <div class="row">
+        <label for="food-want">今いちばん食べたいもの</label>
+        <textarea id="food-want" placeholder="例）もつ鍋、焼き鳥、寿司、ラーメン など"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">送信する</button>
+      <div id="status" class="status"></div>
+    </form>
+  </div>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>
